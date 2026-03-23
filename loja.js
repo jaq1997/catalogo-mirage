@@ -85,7 +85,7 @@ function renderGrid() {
         <div class="card-type">${p.tipo.charAt(0).toUpperCase() + p.tipo.slice(1)}</div>
         <div class="card-footer">
           <div class="card-price">${price(p)}</div>
-          <button class="wpp-btn" onclick="event.stopPropagation();window.open('https://wa.me/${WPP}?text='+wppMsg(p,null),'_blank')">${wppSvg} Pedir</button>
+          <button class="wpp-btn" onclick="event.stopPropagation();window.open('https://wa.me/${WPP}?text=${wppMsg(p,null)}','_blank')">${wppSvg} Pedir</button>
         </div>
       </div>
     </div>`).join('');
