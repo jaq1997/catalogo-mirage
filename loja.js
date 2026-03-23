@@ -59,7 +59,7 @@ function renderGrid() {
   const source = window.produtos || window.todos || [];
   const list = source.filter(p =>
     (activeFilters.tipo  === 'todos' || p.tipo  === activeFilters.tipo) &&
-    (activeFilters.marca === 'todos' || p.marca === activeFilters.marca)
+    (activeFilters.marca === 'todos' || activeFilters.marca === 'todas' || p.marca === activeFilters.marca)
   );
 
   const countEl = document.getElementById('pcount');
@@ -147,4 +147,9 @@ function closeModal(e) {
 /* ─── KEYBOARD CLOSE ──────────────────────────────────────────────────────── */
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeModal();
+});
+
+/* ─── INIT ────────────────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  renderGrid();
 });

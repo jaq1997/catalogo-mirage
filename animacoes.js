@@ -34,13 +34,46 @@ window.addEventListener('scroll', () => {
     : 'none';
 }, { passive: true });
 
-/* HERO PARALLAX — efeito leve de parallax no banner hero */
-window.addEventListener('scroll', () => {
-  const heroImg = document.querySelector('.hero img');
-  if (!heroImg) return;
-  const offset = window.scrollY * 0.15;
-  heroImg.style.transform = `translateY(${offset}px) scale(1.02)`;
-}, { passive: true });
+/* ─── HERO SLIDER ───────────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  const slides = document.querySelectorAll('.slide');
+  const dotsContainer = document.getElementById('sliderDots');
+  if (!slides.length || !dotsContainer) return;
+
+  let currentSlide = 0;
+  let slideInterval;
+
+  // Create dots
+  slides.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = `dot ${i === 0 ? 'active' : ''}`;
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = document.querySelectorAll('.dot');
+
+  function goToSlide(index) {
+    slides[currentSlide].classList.remove('active');
+    dots[currentSlide].classList.remove('active');
+    currentSlide = index;
+    slides[currentSlide].classList.add('active');
+    dots[currentSlide].classList.add('active');
+    resetInterval();
+  }
+
+  function nextSlide() {
+    let next = (currentSlide + 1) % slides.length;
+    goToSlide(next);
+  }
+
+  function resetInterval() {
+    clearInterval(slideInterval);
+    slideInterval = setInterval(nextSlide, 6000);
+  }
+
+  resetInterval();
+});
 
 /* MODAL IMAGE ZOOM — clique na imagem principal do modal dá zoom */
 document.addEventListener('DOMContentLoaded', () => {

@@ -97,21 +97,114 @@ nav {
 }
 .region-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-/* ─── HERO BANNERS ──────────────────────────────────────────────────────────── */
-.hero {
-  overflow: hidden;
-  cursor: pointer;
-  max-height: 560px;
-}
-.hero img {
+/* ─── HERO BANNERS & SLIDER ─────────────────────────────────────────────────── */
+.hero-slider {
+  position: relative;
   width: 100%;
-  max-height: 560px;
+  height: 60vh;
+  min-height: 500px;
+  max-height: 700px;
+  overflow: hidden;
+  background: var(--gray2);
+}
+.slide {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s ease, visibility 0.8s;
+  cursor: pointer;
+}
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+}
+.slide img {
+  width: 100%; height: 100%;
   object-fit: cover;
   object-position: center;
   display: block;
-  transition: transform .6s ease;
+  filter: brightness(0.65);
+  transition: transform 6s linear;
 }
-.hero:hover img { transform: scale(1.02); }
+.slide.active img {
+  transform: scale(1.05);
+}
+.slide-content {
+  position: absolute;
+  bottom: 12%;
+  left: 5%;
+  pointer-events: none;
+}
+.slide-subtitle {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: var(--accent);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  transform: translateY(20px);
+  opacity: 0;
+}
+.slide.active .slide-subtitle {
+  animation: slideContentUp 0.6s ease forwards 0.3s;
+}
+.slide-title {
+  font-family: var(--font-d);
+  font-size: 72px;
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  margin-bottom: 20px;
+  transform: translateY(20px);
+  opacity: 0;
+}
+.slide.active .slide-title {
+  animation: slideContentUp 0.6s ease forwards 0.5s;
+}
+.slide-btn {
+  background: transparent;
+  color: var(--white);
+  border: 1px solid var(--white);
+  padding: 10px 24px;
+  font-family: var(--font-b);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: all 0.3s;
+  transform: translateY(20px);
+  opacity: 0;
+}
+.slide-btn:hover {
+  background: var(--white);
+  color: var(--black);
+}
+.slide.active .slide-btn {
+  animation: slideContentUp 0.6s ease forwards 0.7s;
+}
+@keyframes slideContentUp {
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.slider-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+.dot {
+  width: 34px;
+  height: 3px;
+  background: rgba(255,255,255,0.3);
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.dot:hover { background: rgba(255,255,255,0.6); }
+.dot.active { background: var(--accent); }
 
 .promo-strip {
   display: grid;
@@ -120,20 +213,34 @@ nav {
   margin: 2px 0;
 }
 .promo-card {
+  position: relative;
   overflow: hidden;
   cursor: pointer;
-  max-height: 300px;
+  height: 250px;
 }
 .promo-card img {
   width: 100%;
-  height: 280px;
+  height: 100%;
   object-fit: cover;
   object-position: center;
   display: block;
-  transition: transform .5s ease, filter .5s ease;
-  filter: brightness(.85);
+  transition: transform .6s ease, filter .6s ease;
+  filter: brightness(.7);
 }
-.promo-card:hover img { transform: scale(1.04); filter: brightness(1); }
+.promo-card:hover img { transform: scale(1.04); filter: brightness(.4); }
+.promo-text {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-d);
+  font-size: 32px;
+  letter-spacing: .06em;
+  color: var(--white);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .4s ease, transform .4s ease;
+}
+.promo-card:hover .promo-text { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
 
 /* ─── FILTERS ───────────────────────────────────────────────────────────────── */
 .filter-section { padding: 36px 28px 16px; }
