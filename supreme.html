@@ -72,23 +72,22 @@
     </g>
   </g>
 </svg></a>
-  <ul class="nav-links"><li><a href="bape.html" class="">BAPE</a></li><li><a href="nike.html" class="">NIKE</a></li><li><a href="adidas.html" class="">ADIDAS</a></li><li><a href="supreme.html" class="active">SUPREME</a></li><li><a href="carhartt.html" class="">CARHARTT</a></li></ul>
+  <div class="nav-search">
+    <input type="text" class="nav-search-input" placeholder="Pesquisar produtos (nome, marca, tipo)..." oninput="handleSearch(this.value)">
+  </div>
   <div class="nav-right">
-    <button class="region-btn" onclick="toggleRegion()" id="regionBtn" data-eu="0">🇧🇷 Brasil</button>
+    <button class="region-btn" onclick="toggleRegion()" id="regionBtn" data-eu="0">🌎 Brasil (R$)</button>
   </div>
 </nav>
+<div class="brand-bar">
+  <ul class="brand-links"><li><a href="bape.html" class="">BAPE</a></li><li><a href="nike.html" class="">NIKE</a></li><li><a href="adidas.html" class="">ADIDAS</a></li><li><a href="supreme.html" class="active">SUPREME</a></li><li><a href="carhartt.html" class="">CARHARTT</a></li></ul>
+</div>
 <div class="hero" onclick="window.location='nike.html'">
   <img src="https://pub-9eb15062e53d4ad1a85362ac330e3002.r2.dev/banner-hero-1.png" alt="Supreme" loading="eager">
 </div>
-<div class="promo-strip">
-  <div class="promo-card" onclick="window.location='carhartt.html'">
-    <img src="https://pub-9eb15062e53d4ad1a85362ac330e3002.r2.dev/banner-hero-2.png" alt="Banner" loading="eager">
-  </div>
-  <div class="promo-card" onclick="window.location='index.html'">
-    <img src="https://pub-9eb15062e53d4ad1a85362ac330e3002.r2.dev/58c8d988.jpg" alt="Ver tudo" loading="eager">
-  </div>
-</div><div class="filter-section">
+<div class="filter-section">
   <div class="section-title">SUPREME <span>COLLECTION</span></div>
+  
   <div class="filters">
     <div class="fg-label">Tipo de peça</div>
     <button class="fb  active" data-g="tipo" data-v="todos" onclick="setFilter('tipo','todos')">TODOS</button><button class="fb" data-g="tipo" data-v="moletons" onclick="setFilter('tipo','moletons')">MOLETONS</button><button class="fb" data-g="tipo" data-v="jaquetas" onclick="setFilter('tipo','jaquetas')">JAQUETAS</button><button class="fb" data-g="tipo" data-v="camisetas" onclick="setFilter('tipo','camisetas')">CAMISETAS</button><button class="fb" data-g="tipo" data-v="calcas" onclick="setFilter('tipo','calcas')">CALCAS</button><button class="fb" data-g="tipo" data-v="sueteres" onclick="setFilter('tipo','sueteres')">SUETERES</button>

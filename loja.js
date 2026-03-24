@@ -4,6 +4,7 @@ const R2  = 'https://pub-9eb15062e53d4ad1a85362ac330e3002.r2.dev';
 
 /* ─── STATE ───────────────────────────────────────────────────────────────── */
 let activeFilters = { tipo: 'todos', marca: 'todos' };
+let searchQuery = '';
 let curProd = null;
 let curSize = null;
 
@@ -24,18 +25,16 @@ function isEu() {
 /* ─── PRICE HELPERS ───────────────────────────────────────────────────────── */
 function price(p) {
   return isEu()
-    ? `€${p.eur.toFixed(2).replace('.', ',')}`
-    : `R$ ${p.brl.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+    ? `Price on request`
+    : `Preço sob consulta`;
 }
 function priceAlt(p) {
-  return isEu()
-    ? `Também em R$ ${p.brl.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
-    : `Também em €${p.eur.toFixed(2).replace('.', ',')}`;
+  return '';
 }
 
 /* ─── WHATSAPP ────────────────────────────────────────────────────────────── */
 function wppMsg(p, sz) {
-  const pr = isEu() ? `€${p.eur}` : `R$${p.brl}`;
+  const pr = isEu() ? `Price on request` : `Preço sob consulta`;
   const s  = sz ? ` | Tamanho: ${sz}` : '';
   return encodeURIComponent(
     `Olá! Tenho interesse no produto:\n\n*${p.nome}* (${p.marca.toUpperCase()})\nTipo: ${p.tipo}${s}\nPreço: ${pr}\n\nPoderia me dar mais informações?`
@@ -53,14 +52,26 @@ function setFilter(group, value) {
   renderGrid();
 }
 
+function handleSearch(val) {
+  searchQuery = (val || '').toLowerCase().trim();
+  renderGrid();
+}
+
 /* ─── RENDER GRID ─────────────────────────────────────────────────────────── */
 function renderGrid() {
   // Use window.produtos if set by brand page, else window.todos
   const source = window.produtos || window.todos || [];
-  const list = source.filter(p =>
-    (activeFilters.tipo  === 'todos' || p.tipo  === activeFilters.tipo) &&
-    (activeFilters.marca === 'todos' || activeFilters.marca === 'todas' || p.marca === activeFilters.marca)
-  );
+  const list = source.filter(p => {
+    const matchTipo = activeFilters.tipo === 'todos' || p.tipo === activeFilters.tipo;
+    const matchMarca = activeFilters.marca === 'todos' || activeFilters.marca === 'todas' || p.marca === activeFilters.marca;
+    let matchBusca = true;
+    if (searchQuery) {
+      matchBusca = p.nome.toLowerCase().includes(searchQuery) ||
+                   p.marca.toLowerCase().includes(searchQuery) ||
+                   p.tipo.toLowerCase().includes(searchQuery);
+    }
+    return matchTipo && matchMarca && matchBusca;
+  });
 
   const countEl = document.getElementById('pcount');
   if (countEl) countEl.textContent = `${list.length} produto${list.length !== 1 ? 's' : ''}`;
@@ -85,7 +96,7 @@ function renderGrid() {
         <div class="card-type">${p.tipo.charAt(0).toUpperCase() + p.tipo.slice(1)}</div>
         <div class="card-footer">
           <div class="card-price">${price(p)}</div>
-          <button class="wpp-btn" onclick="event.stopPropagation();window.open('https://wa.me/${WPP}?text=${wppMsg(p,null)}','_blank')">${wppSvg} Pedir</button>
+          <button class="wpp-btn" onclick="event.stopPropagation();window.open('https://wa.me/${WPP}?text=${wppMsg(p,null)}','_blank')">${wppSvg} Comprar no WhatsApp</button>
         </div>
       </div>
     </div>`).join('');
