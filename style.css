@@ -239,6 +239,27 @@ nav {
   max-height: 700px;
   overflow: hidden;
   background: var(--gray2);
+  transition: max-height 0.4s ease, min-height 0.4s ease, opacity 0.4s ease;
+}
+
+/* Hero oculto quando há busca ativa no mobile */
+.hero-slider.search-hidden {
+  max-height: 0 !important;
+  min-height: 0 !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.promo-strip {
+  transition: max-height 0.4s ease, opacity 0.4s ease, margin 0.4s ease;
+}
+
+.promo-strip.search-hidden {
+  max-height: 0 !important;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  margin: 0;
 }
 
 .slide {
@@ -623,14 +644,13 @@ nav {
   flex-shrink: 0;
 }
 
-/* ─── MODAL CORRIGIDO (COM O PONTO NO .OVERLAY) ────────────────────────────── */
+/* ─── MODAL ────────────────────────────────────────────────────────────────── */
 .overlay {
   position: fixed !important;
   inset: 0 !important;
   background: rgba(0, 0, 0, 0.72);
   z-index: 9999 !important;
   display: none;
-  /* JS muda para flex */
   align-items: center;
   justify-content: center;
   padding: 20px;
@@ -651,7 +671,6 @@ nav {
   position: relative;
   border: 1px solid #333;
   overflow: hidden;
-  /* Evita que a imagem saia do modal */
 }
 
 /* Permitir copiar texto */
@@ -665,13 +684,11 @@ nav {
 }
 
 /* ─── BANNERS PARA PÁGINAS DE MARCA ────────────────────────────────────────── */
-/* Se a página for de marca (não tiver a classe .home), escondemos o que sobra do slider */
 body:not(.home) .slider-dots,
 body:not(.home) .dot {
   display: none !important;
 }
 
-/* Ajuste para o banner simples nas páginas de marca */
 .brand-hero-simple {
   width: 100%;
   height: 40vh;
@@ -955,6 +972,48 @@ footer a:hover {
   }
 }
 
+/* ─── WHATSAPP FLOATING BUTTON ──────────────────────────────────────────────── */
+.wpp-float {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 8888;
+  width: 56px;
+  height: 56px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  animation: wppPulse 3s ease-in-out infinite;
+}
+
+.wpp-float:hover {
+  background: #1db954;
+  transform: scale(1.1);
+  box-shadow: 0 6px 28px rgba(37, 211, 102, 0.6);
+  animation: none;
+}
+
+.wpp-float svg {
+  width: 30px;
+  height: 30px;
+  fill: #fff;
+}
+
+@keyframes wppPulse {
+  0%, 100% {
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+  }
+  50% {
+    box-shadow: 0 4px 32px rgba(37, 211, 102, 0.75), 0 0 0 8px rgba(37, 211, 102, 0.1);
+  }
+}
+
 /* ─── RESPONSIVE ────────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   nav {
@@ -1102,24 +1161,91 @@ footer a:hover {
   .section-title {
     font-size: 32px;
   }
+
+  /* Floating button smaller on mobile */
+  .wpp-float {
+    bottom: 16px;
+    right: 16px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .wpp-float svg {
+    width: 26px;
+    height: 26px;
+  }
 }
 
 @media (max-width: 480px) {
+  /* ── MODAL MOBILE ── */
+  .overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
   .modal {
     grid-template-columns: 1fr;
-    max-height: none;
+    max-height: 92dvh;
+    max-height: 92vh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px 16px 0 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
   }
 
   .modal-img-wrap {
     display: block;
-    /* Mostra a imagem no mobile */
-    height: 300px;
+    flex-shrink: 0;
+    height: 240px;
+    min-height: 0;
   }
 
   .modal-img-wrap img#mImg {
+    width: 100%;
     height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    flex: unset;
+    min-height: unset;
   }
 
+  .modal-thumbs {
+    flex-shrink: 0;
+    padding: 6px 8px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+
+  .modal-body {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    max-height: none;
+    padding: 18px 16px 0;
+  }
+
+  .m-name {
+    font-size: 24px;
+  }
+
+  .m-price {
+    font-size: 20px;
+  }
+
+  /* Botão WPP fica grudado no fundo do modal */
+  .m-wpp {
+    position: sticky;
+    bottom: 0;
+    flex-shrink: 0;
+    padding: 16px;
+    margin-top: 16px;
+  }
+
+  /* ── NAV ── */
   nav {
     padding: 0 16px;
   }
@@ -1154,8 +1280,6 @@ body:not(.home) .slider-dots {
   display: none !important;
 }
 
-/* Se a página não for o index, vamos travar o título para não animar errado */
 body:not(.home) .slide-content {
   pointer-events: auto;
-  /* Permite interagir se precisar */
 }
