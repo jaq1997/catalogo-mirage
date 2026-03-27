@@ -1283,3 +1283,38 @@ body:not(.home) .slider-dots {
 body:not(.home) .slide-content {
   pointer-events: auto;
 }
+
+/* ─── BOTTOM SHEET MODAL (MOBILE) ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  .overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .modal {
+    grid-template-columns: 1fr;
+    border-radius: 20px 20px 0 0;
+    max-height: 90vh;
+    animation: slideUp 0.4s cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .modal-img-wrap {
+    height: 300px;
+  }
+
+  .modal-body {
+    padding: 20px;
+    padding-bottom: 40px;
+  }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+/* Permitir seleção/cópia de texto */
+.m-name, .m-desc, .m-price, .card-name {
+  user-select: text !important;
+  cursor: text;
+}
