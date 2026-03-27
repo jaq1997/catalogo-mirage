@@ -4,7 +4,7 @@ const BASE_URL_FOTOS = 'https://pub-9eb15062e53d4ad1a85362ac330e3002.r2.dev/';
 
 /* ─── ESTADO DA APLICAÇÃO ────────────────────────────────────────────────── */
 const path = window.location.pathname.split("/").pop();
-const pageBrand = path.replace(".html", "").toLowerCase();
+const pageBrand = (path === '' || path === 'index.html') ? '' : path.replace(".html", "").toLowerCase();
 const marcasValidas = ['adidas', 'nike', 'supreme', 'bape', 'carhartt'];
 
 const marcaFixa = marcasValidas.includes(pageBrand) ? pageBrand : 'todos';
