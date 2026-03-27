@@ -6,10 +6,17 @@ window.todos = [
     "tipo": "jaquetas",
     "brl": "Preço sob consulta",
     "eur": "Price on request",
-    "sizes": ["P","M","G","GG"],
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
     "desc": "Exclusividade e estilo definem a Jaqueta Carhartt WIP x Sacai Chore Coat na cor cinza. Combinando o utilitarismo clássico da Carhartt com o design de alta moda da Sacai, esta peça apresenta botões dourados, múltiplos bolsos frontais e gola contrastante preta. Perfeita para um visual streetwear sofisticado, resistente e autêntico. Compre agora e eleve seu guarda-roupa com esta colaboração única.",
     "badge": "Limitado",
-    "imgs": ["Jaqueta-Carhartt-WIP-Sacai-Chore-Coat-Cinza.jpg"]
+    "imgs": [
+      "jaqueta-carhartt-WIP-Sacai-Chore -Coat-Cinza.jpg"
+    ]
   },
   {
     "id": 2,
@@ -18,10 +25,17 @@ window.todos = [
     "tipo": "jaquetas",
     "brl": "Preço sob consulta",
     "eur": "Price on request",
-    "sizes": ["P","M","G","GG"],
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
     "desc": "A Jaqueta Carhartt WIP x Sacai Marrom é a fusão perfeita entre moda contemporânea e workwear. Possui fechamento em zíper, gola preta contrastante e detalhes exclusivos de sobreposição na barra, assinatura visual da Sacai. Confeccionada em lona resistente, oferece durabilidade incomparável e um visual urbano de destaque.",
     "badge": "Limitado",
-    "imgs": ["Jaqueta-Carhartt-WIP-Sacai-Workwear-Marrom.jpg"]
+    "imgs": [
+      "Jaqueta-Carhartt-WIP-Sacai-Workwear-Marrom.jpg"
+    ]
   },
   {
     "id": 3,
@@ -30,10 +44,36 @@ window.todos = [
     "tipo": "jaquetas",
     "brl": "Preço sob consulta",
     "eur": "Price on request",
-    "sizes": ["P","M","G","GG"],
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
     "desc": "Destaque-se com a Jaqueta Carhartt WIP x Sacai Preta. Esta peça de colaboração exclusiva traz o icônico corte utilitário com acabamentos premium, zíper dourado, bolsos frontais reforçados e um detalhe de forro cinza aparente na barra. Ideal para sobreposições no inverno, unindo atitude e luxo desconstruído.",
     "badge": "Limitado",
-    "imgs": ["Jaqueta-Carhartt-WIP-Sacai-Detroit-Preta.jpg"]
+    "imgs": [
+      "Jaqueta-Carhartt-WIP-Sacai-Detroit-Preta.jpg"
+    ]
+  },
+  {
+    "id": 4,
+    "nome": "Jaqueta Carhartt WIP Detroit Washed Black",
+    "marca": "carhartt",
+    "tipo": "jaquetas",
+    "brl": "Preço sob consulta",
+    "eur": "Price on request",
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
+    "desc": "O clássico absoluto do workwear: a Jaqueta Carhartt WIP Detroit em lona estonada (Washed Black). Com gola em veludo cotelê contrastante e bolso no peito com fechamento em zíper, ela garante resistência extrema e um visual autêntico e despojado para o dia a dia. Uma peça essencial de streetwear que nunca sai de moda.",
+    "badge": "Hot",
+    "imgs": [
+      "Jaqueta Carhartt WIP Detroit Washed Black_foto1.jpg"
+    ]
   },
   {
     "id": 5,
@@ -42,10 +82,55 @@ window.todos = [
     "tipo": "jaquetas",
     "brl": "Preço sob consulta",
     "eur": "Price on request",
-    "sizes": ["P","M","G","GG"],
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
     "desc": "Proteção e design moderno se encontram nesta Jaqueta Carhartt WIP Bege. Com tecido técnico de alta performance, gola alta, zíperes selados e detalhes utilitários nas mangas, é a escolha ideal para dias de vento ou chuva na cidade. Combinando funcionalidade com a estética clean, é perfeita para quem busca estilo e utilidade.",
     "badge": "",
-    "imgs": ["Jaqueta-Corta-Vento-Carhartt-WIP-Tech-Bege.jpg"]
+    "imgs": [
+      "Jaqueta-Corta-Vento-Carhartt-WIP-Tech-Bege.jpg"
+    ]
+  },
+  {
+    "id": 6,
+    "nome": "Jaqueta Carhartt WIP Detroit Hamilton Brown",
+    "marca": "carhartt",
+    "tipo": "jaquetas",
+    "brl": "Preço sob consulta",
+    "eur": "Price on request",
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
+    "desc": "Ícone da cultura urbana, a Jaqueta Carhartt WIP Detroit na cor clássica Hamilton Brown é indispensável no seu closet. Feita em lona Dearborn super resistente, conta com gola de veludo cotelê, zíper robusto e a clássica etiqueta da marca no peito. Versátil e extremamente durável, é o investimento perfeito para o seu estilo.",
+    "badge": "Hot",
+    "imgs": [
+      "Jaqueta Carhartt WIP Detroit Hamilton Brown_foto1.jpg"
+    ]
+  },
+  {
+    "id": 7,
+    "nome": "Jaqueta Carhartt WIP Modular Preta",
+    "marca": "carhartt",
+    "tipo": "jaquetas",
+    "brl": "Preço sob consulta",
+    "eur": "Price on request",
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
+    "desc": "Minimalismo e atitude com a Jaqueta Carhartt WIP Modular Preta. Com um corte limpo, fechamento em zíper frontal dourado e bolsos laterais discretos, ela é a base perfeita para qualquer look. Confeccionada com a qualidade premium da marca, oferece conforto e longevidade para o uso diário, sendo uma peça coringa no guarda-roupa masculino.",
+    "badge": "",
+    "imgs": [
+      "Jaqueta Carhartt WIP Modular Preta_foto1.jpg"
+    ]
   },
   {
     "id": 8,
@@ -54,10 +139,17 @@ window.todos = [
     "tipo": "moletons",
     "brl": "Preço sob consulta",
     "eur": "Price on request",
-    "sizes": ["P","M","G","GG"],
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
     "desc": "Aqueça-se com muito estilo usando o Suéter em Tricô Carhartt WIP Half-Zip Azul Marinho. Apresenta gola alta ajustável com zíper e o logo em destaque bordado no peito. Confeccionado em malha encorpada de alta qualidade, é a opção ideal para um visual casual, confortável e com forte apelo streetwear nos dias mais frios.",
     "badge": "Hot",
-    "imgs": ["Sueter-Carhartt-WIP-Half-Zip-Knit-Marinho.jpg"]
+    "imgs": [
+      "Sueter-Carhartt-WIP-Half-Zip-Knit-Marinho.jpg"
+    ]
   },
   {
     "id": 9,
@@ -66,10 +158,17 @@ window.todos = [
     "tipo": "moletons",
     "brl": "Preço sob consulta",
     "eur": "Price on request",
-    "sizes": ["P","M","G","GG"],
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
     "desc": "Conforto premium e design clássico no Suéter Carhartt WIP Half-Zip Cinza Mescla. Com modelagem confortável, gola alta em zíper e o icônico logo da marca bordado, esta peça de tricô é perfeita para sobreposições elegantes e descontraídas. Une a tradição da marca com as tendências urbanas atuais.",
     "badge": "",
-    "imgs": ["Sueter-Carhartt-WIP-Half-Zip-Knit-Cinza.jpg"]
+    "imgs": [
+      "Sueter-Carhartt-WIP-Half-Zip-Knit-Cinza.jpg"
+    ]
   },
   {
     "id": 10,
@@ -78,10 +177,17 @@ window.todos = [
     "tipo": "jaquetas",
     "brl": "Preço sob consulta",
     "eur": "Price on request",
-    "sizes": ["P","M","G","GG"],
-    "desc": "A Jaqueta Carhartt WIP x Sacai Chore Coat Preta é o ápice do design colaborativo...",
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
+    "desc": "A Jaqueta Carhartt WIP x Sacai Chore Coat Preta é o ápice do design colaborativo. Unindo a robustez do workwear com detalhes refinados como botões dourados, forro aparente contrastante e modelagem impecável, esta peça eleva o conceito de roupa utilitária. Uma adição poderosa e exclusiva para os fãs de moda high-end e streetwear.",
     "badge": "Limitado",
-    "imgs": ["Jaqueta-Carhartt-WIP-Sacai-Chore-Coat-Preta.jpg"]
+    "imgs": [
+      "Jaqueta-Carhartt-WIP-Sacai-Chore-Coat-Preta.jpg"
+    ]
   },
   {
     "id": 11,
@@ -90,10 +196,36 @@ window.todos = [
     "tipo": "jaquetas",
     "brl": "Preço sob consulta",
     "eur": "Price on request",
-    "sizes": ["P","M","G","GG"],
-    "desc": "A fusão definitiva entre o autêntico workwear e a cultura skate/surf...",
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
+    "desc": "A fusão definitiva entre o autêntico workwear e a cultura skate/surf. A Jaqueta Carhartt WIP x Stüssy Detroit Bege traz o clássico design de lona resistente com gola em veludo cotelê marrom e o bordado icônico da Stüssy no peito, logo acima do clássico bolso de zíper. Uma peça de colecionador, perfeita para um visual urbano exclusivo e cheio de atitude.",
     "badge": "Limitado",
-    "imgs": ["Jaqueta-Carhartt-WIP-Stüssy-Detroit-Bege.jpg"]
+    "imgs": [
+      "Jaqueta-Carhartt-WIP-Stüssy-Detroit-Bege.jpg"
+    ]
+  },
+  {
+    "id": 12,
+    "nome": "Jaqueta Carhartt WIP Detroit Denim Azul",
+    "marca": "carhartt",
+    "tipo": "jaquetas",
+    "brl": "Preço sob consulta",
+    "eur": "Price on request",
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
+    "desc": "O estilo atemporal do jeans encontra a durabilidade extrema do workwear na Jaqueta Carhartt WIP Detroit Denim. Com lavagem azul clássica e gola contrastante em veludo cotelê caramelo, esta peça oferece versatilidade incomparável para o dia a dia. Conta com o tradicional bolso no peito com zíper e a inconfundível etiqueta Carhartt, sendo um curinga para qualquer guarda-roupa.",
+    "badge": "Hot",
+    "imgs": [
+      "Jaqueta Carhartt WIP Detroit Denim Azul_foto1.jpg"
+    ]
   },
   {
     "id": 13,
@@ -102,10 +234,36 @@ window.todos = [
     "tipo": "jaquetas",
     "brl": "Preço sob consulta",
     "eur": "Price on request",
-    "sizes": ["P","M","G","GG"],
-    "desc": "Funcionalidade e estética techwear se unem...",
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
+    "desc": "Funcionalidade e estética techwear se unem na Jaqueta Corta-Vento Carhartt WIP Tech Cinza. Desenvolvida com tecido leve e resistente a intempéries, possui gola alta, zíperes frontais selados e bolsos utilitários de design limpo. Ideal para sobreposições técnicas e para manter o estilo impecável mesmo em dias de clima instável na cidade.",
     "badge": "",
-    "imgs": ["Jaqueta-Corta-Vento-Carhartt-WIP-Tech-Cinza.jpg"]
+    "imgs": [
+      "Jaqueta-Corta-Vento-Carhartt-WIP-Tech-Cinza.jpg"
+    ]
+  },
+  {
+    "id": 14,
+    "nome": "Jaqueta Carhartt WIP Detroit Preta",
+    "marca": "carhartt",
+    "tipo": "jaquetas",
+    "brl": "Preço sob consulta",
+    "eur": "Price on request",
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
+    "desc": "O pilar absoluto do guarda-roupa streetwear: a Jaqueta Carhartt WIP Detroit Preta. Confeccionada em lona de algodão robusta com gola em veludo cotelê na mesma cor, ela entrega um visual clean, minimalista e de alta durabilidade. Uma jaqueta essencial, de corte reto e atemporal, que combina com absolutamente qualquer look e resiste ao teste do tempo.",
+    "badge": "Hot",
+    "imgs": [
+      "Jaqueta Carhartt WIP Detroit Preta_foto1.jpg"
+    ]
   },
   {
     "id": 15,
@@ -114,10 +272,17 @@ window.todos = [
     "tipo": "jaquetas",
     "brl": "Preço sob consulta",
     "eur": "Price on request",
-    "sizes": ["P","M","G","GG"],
-    "desc": "Para quem busca utilitarismo...",
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
+    "desc": "Para quem busca utilitarismo sem abrir mão do design contemporâneo, a Jaqueta Carhartt WIP Utility Cinza é a escolha certa. Inspirada nos uniformes de trabalho tradicionais, apresenta modelagem reta e múltiplos bolsos estratégicos (frontais e na manga), garantindo espaço e funcionalidade. Seu tom neutro facilita a composição de looks modernos e estruturados.",
     "badge": "",
-    "imgs": ["Jaqueta-Carhartt-WIP-Utility-Multi-Pocket-Cinza.jpg"]
+    "imgs": [
+      "Jaqueta-Carhartt-WIP-Utility-Multi-Pocket-Cinza.jpg"
+    ]
   },
   {
     "id": 16,
@@ -126,12 +291,18 @@ window.todos = [
     "tipo": "jaquetas",
     "brl": "Preço sob consulta",
     "eur": "Price on request",
-    "sizes": ["P","M","G","GG"],
-    "desc": "A Jaqueta Corta-Vento Carhartt WIP Tech Preta...",
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
+    "desc": "A Jaqueta Corta-Vento Carhartt WIP Tech Preta é a definição de funcionalidade urbana com sofisticação. Com silhueta ajustada, tecido tecnológico resistente ao vento, gola alta e acabamentos em zíper selado, ela oferece proteção com uma estética ninja/techwear. Uma peça fundamental para navegar a cidade com conforto e uma pegada moderna.",
     "badge": "",
-    "imgs": ["Jaqueta-Corta-Vento-Carhartt-WIP-Tech-Preta.jpg"]
-  }
-];
+    "imgs": [
+      "Jaqueta-Corta-Vento-Carhartt-WIP-Tech-Preta.jpg"
+    ]
+  },
   {
     "id": 17,
     "nome": "Moletom BAPE Shark Full Zip Camo Branco/Azul",
