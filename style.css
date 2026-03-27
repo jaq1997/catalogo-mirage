@@ -1199,30 +1199,35 @@ footer a:hover {
   }
 
   .modal-img-wrap {
-    display: block;
     flex-shrink: 0;
     height: 260px;
     min-height: 0;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
   }
 
   .modal-img-wrap img#mImg {
     width: 100%;
-    height: 100%;
+    height: 260px;
+    flex-shrink: 0;
     object-fit: cover;
     object-position: center top;
     flex: unset;
     min-height: unset;
+    display: block;
   }
 
   .modal-thumbs {
     flex-shrink: 0;
-    padding: 8px 12px;
+    padding: 6px 12px;
     overflow-x: auto;
     flex-wrap: nowrap;
     background: var(--gray2);
     border-bottom: 1px solid var(--gray3);
+    position: relative;
+    z-index: 2;
   }
 
   .modal-body {
