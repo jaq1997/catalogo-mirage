@@ -3,7 +3,6 @@ const WPP = '5551989912555';
 const BASE_URL_FOTOS = 'https://pub-9eb15062e53d4ad1a85362ac330e3002.r2.dev/';
 
 /* ─── ESTADO DA APLICAÇÃO ────────────────────────────────────────────────── */
-// Detecta se estamos em uma página de marca (ex: nike.html) ou na home
 const path = window.location.pathname.split("/").pop();
 const pageBrand = path.replace(".html", "").toLowerCase();
 const marcasValidas = ['adidas', 'nike', 'supreme', 'bape', 'carhartt'];
@@ -45,9 +44,37 @@ function setFilter(group, value) {
   renderGrid();
 }
 
+function isMobile() {
+  return window.innerWidth <= 768;
+}
+
 function handleSearch(val) {
   searchQuery = (val || '').toLowerCase().trim();
   renderGrid();
+
+  // Comportamento mobile: esconde hero + promo e faz scroll pro grid
+  if (isMobile()) {
+    const hero = document.getElementById('heroSlider');
+    const promo = document.querySelector('.promo-strip');
+    const filterSection = document.querySelector('.filter-section');
+
+    if (searchQuery.length > 0) {
+      // Esconde o hero e o promo strip
+      if (hero) hero.classList.add('search-hidden');
+      if (promo) promo.classList.add('search-hidden');
+
+      // Scroll suave até a seção de filtros/grid
+      if (filterSection) {
+        setTimeout(() => {
+          filterSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 50);
+      }
+    } else {
+      // Quando limpa a busca, restaura o hero e o promo
+      if (hero) hero.classList.remove('search-hidden');
+      if (promo) promo.classList.remove('search-hidden');
+    }
+  }
 }
 
 function toggleRegion() {
@@ -150,12 +177,15 @@ function openModal(id) {
   mThumbs.innerHTML = p.imgs
     .map((img, i) => `<img src="${encodeURI(BASE_URL_FOTOS + img)}" class="${i === 0 ? 'active' : ''}" onclick="switchImg(this.src,this)">`).join('');
 
+  // Define o handler do botão WPP inicial (sem tamanho selecionado)
+  const wppBtn = document.getElementById('mWpp');
+  if (wppBtn) wppBtn.onclick = () => window.open(`https://wa.me/${WPP}?text=${wppMsg(curProd, curSize)}`, '_blank');
+
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 
 function closeModal(e) {
-  // SÓ fecha se clicar no fundo escuro ou se não houver evento (X ou ESC)
   if (!e || e.target === document.getElementById('overlay') || e.target.className === 'mcls') {
     document.getElementById('overlay').classList.remove('open');
     document.body.style.overflow = '';
@@ -186,6 +216,23 @@ function toggleBrandsDropdown(e) {
 document.addEventListener('DOMContentLoaded', () => {
   renderGrid();
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-  const sInput = document.querySelector('.nav-search-input');
-  if (sInput) sInput.addEventListener('input', () => handleSearch(sInput.value));
+
+  // Fecha dropdown de marcas ao clicar fora
+  document.addEventListener('click', e => {
+    const dropdown = document.getElementById('brandsDropdown');
+    if (dropdown && !dropdown.contains(e.target) && !e.target.closest('.brands-toggle-mobile')) {
+      dropdown.classList.remove('open');
+    }
+  });
+
+  // Sincroniza os dois inputs de busca (desktop e mobile)
+  const inputs = document.querySelectorAll('.nav-search-input');
+  inputs.forEach(input => {
+    input.addEventListener('input', () => {
+      const val = input.value;
+      // Sincroniza o outro input
+      inputs.forEach(other => { if (other !== input) other.value = val; });
+      handleSearch(val);
+    });
+  });
 });
