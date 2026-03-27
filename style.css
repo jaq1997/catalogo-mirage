@@ -1195,13 +1195,16 @@ footer a:hover {
     border-left: none;
     border-right: none;
     border-bottom: none;
+    animation: slideUp 0.35s cubic-bezier(0, 0, 0.2, 1);
   }
 
   .modal-img-wrap {
     display: block;
     flex-shrink: 0;
-    height: 240px;
+    height: 260px;
     min-height: 0;
+    position: relative;
+    overflow: hidden;
   }
 
   .modal-img-wrap img#mImg {
@@ -1215,9 +1218,11 @@ footer a:hover {
 
   .modal-thumbs {
     flex-shrink: 0;
-    padding: 6px 8px;
+    padding: 8px 12px;
     overflow-x: auto;
     flex-wrap: nowrap;
+    background: var(--gray2);
+    border-bottom: 1px solid var(--gray3);
   }
 
   .modal-body {
@@ -1284,30 +1289,7 @@ body:not(.home) .slide-content {
   pointer-events: auto;
 }
 
-/* ─── BOTTOM SHEET MODAL (MOBILE) ─────────────────────────────────────── */
-@media (max-width: 768px) {
-  .overlay {
-    align-items: flex-end;
-    padding: 0;
-  }
-
-  .modal {
-    grid-template-columns: 1fr;
-    border-radius: 20px 20px 0 0;
-    max-height: 90vh;
-    animation: slideUp 0.4s cubic-bezier(0, 0, 0.2, 1);
-  }
-
-  .modal-img-wrap {
-    height: 300px;
-  }
-
-  .modal-body {
-    padding: 20px;
-    padding-bottom: 40px;
-  }
-}
-
+/* ─── ANIMAÇÃO BOTTOM SHEET ────────────────────────────────────────────── */
 @keyframes slideUp {
   from { transform: translateY(100%); }
   to   { transform: translateY(0); }
