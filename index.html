@@ -184,49 +184,27 @@
 
     <div class="slider-dots" id="sliderDots"></div>
   </div>
-  <div class="promo-strip">
-    <div class="promo-card" onclick="window.location='adidas.html'">
-      <picture>
-        <source media="(max-width: 768px)"
-          srcset="https://pub-9eb15062e53d4ad1a85362ac330e3002.r2.dev/Adidas-banner-promo-esq-mobile.png">
-        <img src="https://pub-9eb15062e53d4ad1a85362ac330e3002.r2.dev/Adidas-banner-promo-esq.png" alt="Adidas"
-          loading="lazy">
-      </picture>
-      <div class="promo-text">ADIDAS</div>
-    </div>
-    <div class="promo-card" onclick="window.location='carhartt.html'">
-      <picture>
-        <source media="(max-width: 768px)"
-          srcset="https://pub-9eb15062e53d4ad1a85362ac330e3002.r2.dev/Carhartt-banner-promo-dir-mobile.png">
-        <img src="https://pub-9eb15062e53d4ad1a85362ac330e3002.r2.dev/Carhartt-banner-promo-dir.png" alt="Carhartt WIP"
-          loading="lazy">
-      </picture>
-      <div class="promo-text">CARHARTT WIP</div>
-    </div>
-  </div>
+  <!-- 2. Primeira Seção de Produtos -->
   <div class="filter-section">
-    <div class="section-title">TODOS OS <span>PRODUTOS</span></div>
-
-    <div class="fg-label">Tipo de peça</div>
-    <button class="fb active" data-g="tipo" data-v="todos" onclick="setFilter('tipo','todos')">TODOS</button>
-    <button class="fb" data-g="tipo" data-v="moletons" onclick="setFilter('tipo','moletons')">MOLETONS</button>
-    <button class="fb" data-g="tipo" data-v="jaquetas" onclick="setFilter('tipo','jaquetas')">JAQUETAS</button>
-    <button class="fb" data-g="tipo" data-v="camisetas" onclick="setFilter('tipo','camisetas')">CAMISETAS</button>
-    <button class="fb" data-g="tipo" data-v="calcas" onclick="setFilter('tipo','calcas')">CALÇAS</button>
-    <div class="fg-label">Marca</div>
-    <button class="fb active" data-g="marca" data-v="todos" onclick="setFilter('marca','todos')">Todas</button>
-    <button class="fb" data-g="marca" data-v="bape" onclick="setFilter('marca','bape')">BAPE</button>
-    <button class="fb" data-g="marca" data-v="nike" onclick="setFilter('marca','nike')">Nike</button>
-    <button class="fb" data-g="marca" data-v="adidas" onclick="setFilter('marca','adidas')">Adidas</button>
-    <button class="fb" data-g="marca" data-v="supreme" onclick="setFilter('marca','supreme')">Supreme</button>
-    <button class="fb" data-g="marca" data-v="carhartt" onclick="setFilter('marca','carhartt')">Carhartt</button>
-  </div>
+    <div class="section-title">DROP <span>EXCLUSIVO</span></div>
   </div>
   <div class="products-section">
-    <div class="ph">
-      <div class="pcount" id="pcount"></div>
-    </div>
-    <div class="grid" id="grid"></div>
+    <div class="grid" id="grid-drop-exclusivo"></div>
+  </div>
+  <!-- 3. Banner Intercalado A (ADIDAS) -->
+  <div class="promo-banner" onclick="window.location='adidas.html'">
+    <img src="https://pub-9eb15062e53d4ad1a85362ac330e3002.r2.dev/Adidas-banner-promo-esq.png" style="width:100%; cursor:pointer;">
+  </div>
+  <!-- 4. Segunda Seção de Produtos -->
+  <div class="filter-section">
+    <div class="section-title">MAIS <span>VISTOS</span></div>
+  </div>
+  <div class="products-section">
+    <div class="grid" id="grid-mais-vistos"></div>
+  </div>
+  <!-- 5. Banner Intercalado B (CARHARTT) -->
+  <div class="promo-banner" onclick="window.location='carhartt.html'">
+    <img src="https://pub-9eb15062e53d4ad1a85362ac330e3002.r2.dev/Carhartt-banner-promo-dir.png" style="width:100%; cursor:pointer;">
   </div>
   <div class="overlay" id="overlay" onclick="closeModal(event)">
     <div class="modal">
