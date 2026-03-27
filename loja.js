@@ -7,9 +7,9 @@ const path = window.location.pathname.split("/").pop();
 const pageBrand = path.replace(".html", "").toLowerCase();
 const marcasValidas = ['adidas', 'nike', 'supreme', 'bape', 'carhartt'];
 
+const marcaFixa = marcasValidas.includes(pageBrand) ? pageBrand : 'todos';
 let activeFilters = {
-  tipo: 'todos',
-  marca: marcasValidas.includes(pageBrand) ? pageBrand : 'todos'
+  tipo: 'todos'
 };
 let searchQuery = '';
 let curProd = null;
@@ -86,32 +86,65 @@ function toggleRegion() {
   renderGrid();
 }
 
+/* ─── ALGORITMO DE RANDOMIZAÇÃO (FISHER-YATES) ─── */
+function embaralhar(array) {
+  let lista = [...array];
+  for (let i = lista.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [lista[i], lista[j]] = [lista[j], lista[i]];
+  }
+  return lista.slice(0, 20);
+}
+
 /* ─── RENDERIZAÇÃO ──────────────────────────────────────────────────────── */
 function renderGrid() {
   const source = window.todos || [];
-  const list = source.filter(p => {
-    const pMarca = (p.marca || "").toLowerCase();
-    const pTipo = (p.tipo || "").toLowerCase();
-    const pNome = (p.nome || "").toLowerCase();
 
-    const matchMarca = activeFilters.marca === 'todos' || pMarca === activeFilters.marca;
-    const matchTipo = activeFilters.tipo === 'todos' || pTipo === activeFilters.tipo || (activeFilters.tipo === 'calcas' && pTipo === 'calças');
-    const matchBusca = !searchQuery || pNome.includes(searchQuery) || pMarca.includes(searchQuery);
+  // HOME: curadoria de 20 produtos aleatórios divididos nas duas seções
+  if (marcaFixa === 'todos') {
+    const selecionados = embaralhar(source);
+    desenharCards('grid-drop-exclusivo', selecionados.slice(0, 10));
+    desenharCards('grid-mais-vistos', selecionados.slice(10, 20));
+  } else {
+    // Páginas de marca: mostra tudo daquela marca com filtros ativos
+    const list = source.filter(p => {
+      const pMarca = (p.marca || "").toLowerCase();
+      const pTipo = (p.tipo || "").toLowerCase();
+      const pNome = (p.nome || "").toLowerCase();
 
-    return matchMarca && matchTipo && matchBusca;
-  });
+      const matchMarca = pMarca === marcaFixa;
+      const matchTipo = activeFilters.tipo === 'todos' || pTipo === activeFilters.tipo || (activeFilters.tipo === 'calcas' && pTipo === 'calças');
+      const matchBusca = !searchQuery || pNome.includes(searchQuery) || pMarca.includes(searchQuery);
 
-  const grid = document.getElementById('grid');
-  const countEl = document.getElementById('pcount');
-  if (countEl) countEl.textContent = `${list.length} produtos`;
+      return matchMarca && matchTipo && matchBusca;
+    });
+
+    const countEl = document.getElementById('pcount');
+    if (countEl) countEl.textContent = `${list.length} produtos`;
+
+    desenharCards('grid', list);
+
+    // Banner dinâmico para páginas internas
+    const slideTitle = document.querySelector('.slide-title');
+    const slideSub = document.querySelector('.slide-subtitle');
+    const slideBtn = document.querySelector('.slide-btn');
+    if (slideTitle) slideTitle.innerHTML = `${marcaFixa.toUpperCase()}<br>COLLECTION`;
+    if (slideSub) slideSub.textContent = "EXPLORE O DROP";
+    if (slideBtn) slideBtn.style.display = 'none';
+  }
+}
+
+/* ─── FUNÇÃO AUXILIAR PARA CRIAR OS CARDS ─── */
+function desenharCards(containerId, lista) {
+  const grid = document.getElementById(containerId);
   if (!grid) return;
 
-  if (list.length === 0) {
+  if (lista.length === 0) {
     grid.innerHTML = '<div class="empty">Nenhum produto encontrado.</div>';
     return;
   }
 
-  grid.innerHTML = list.map((p, i) => {
+  grid.innerHTML = lista.map(p => {
     const fotoUrl = encodeURI(BASE_URL_FOTOS + p.imgs[0]);
     return `
     <div class="card" onclick="openModal(${p.id})">
@@ -122,26 +155,15 @@ function renderGrid() {
       <div class="card-info">
         <div class="card-brand">${p.marca.toUpperCase()}</div>
         <div class="card-name">${p.nome}</div>
-        <div class="card-type">${p.tipo.toUpperCase()}</div>
         <div class="card-footer">
           <div class="card-price">${price(p)}</div>
           <button class="wpp-btn" onclick="event.stopPropagation();window.open('https://wa.me/${WPP}?text=${wppMsg(p, null)}','_blank')">
-            ${wppSvg} Comprar no WhatsApp
+            ${wppSvg} DETALHES
           </button>
         </div>
       </div>
     </div>`;
   }).join('');
-
-  // Lógica de Banner Dinâmico para páginas internas
-  if (activeFilters.marca !== 'todos') {
-    const slideTitle = document.querySelector('.slide-title');
-    const slideSub = document.querySelector('.slide-subtitle');
-    const slideBtn = document.querySelector('.slide-btn');
-    if (slideTitle) slideTitle.innerHTML = `${activeFilters.marca.toUpperCase()}<br>COLLECTION`;
-    if (slideSub) slideSub.textContent = "EXPLORE O DROP";
-    if (slideBtn) slideBtn.style.display = 'none';
-  }
 }
 
 /* ─── MODAL ─────────────────────────────────────────────────────────────── */
