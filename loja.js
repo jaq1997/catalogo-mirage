@@ -15,14 +15,32 @@ let searchQuery = '';
 let curProd = null;
 let curSize = null;
 
-/* ─── HELPERS DE PREÇO E MOEDA ───────────────────────────────────────────── */
+/* ─── DICIONÁRIO DE TRADUÇÃO ─── */
+const i18n = {
+  pt: {
+    price: "Preço sob consulta",
+    buy: "Comprar no WhatsApp",
+    explore: "EXPLORE O DROP",
+    empty: "Nenhum produto encontrado.",
+    found: "produtos encontrados"
+  },
+  en: {
+    price: "Price on request",
+    buy: "Order via WhatsApp",
+    explore: "DISCOVER THE DROP",
+    empty: "No products found.",
+    found: "products found"
+  }
+};
+
+/* ─── HELPERS DE IDIOMA E MOEDA ─────────────────────────────────────────── */
 function isEu() { return document.getElementById('regionBtn')?.dataset.eu === '1'; }
-function price(p) { return isEu() ? `Price on request` : `Preço sob consulta`; }
+function getLang() { return isEu() ? i18n.en : i18n.pt; }
 
 function wppMsg(p, sz) {
-  const pr = price(p);
+  const lang = getLang();
   const s = sz ? ` | Tamanho: ${sz}` : '';
-  return encodeURIComponent(`Olá! Tenho interesse no produto:\n\n*${p.nome}*\nPreço: ${pr}${s}\n\nVi no catálogo Mirage Co.`);
+  return encodeURIComponent(`Olá! Tenho interesse no produto:\n\n*${p.nome}*\nPreço: ${lang.price}${s}\n\nVi no catálogo Mirage Co.`);
 }
 
 const wppSvg = `<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="vertical-align:middle; margin-right:5px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.535 5.858L.057 23.633a.5.5 0 0 0 .61.61l5.775-1.478A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.944 9.944 0 0 1-5.088-1.392l-.363-.216-3.763.963.982-3.637-.237-.376A9.944 9.944 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>`;
@@ -80,9 +98,13 @@ function handleSearch(val) {
 function toggleRegion() {
   const btn = document.getElementById('regionBtn');
   if (!btn) return;
-  const isEu = btn.dataset.eu === '1';
-  btn.dataset.eu = isEu ? '0' : '1';
-  btn.textContent = isEu ? '🇧🇷 Brasil' : '🇪🇺 Europa';
+  const isEuNow = btn.dataset.eu === '1';
+  btn.dataset.eu = isEuNow ? '0' : '1';
+  btn.textContent = isEuNow ? '🇧🇷 Brasil (R$)' : '🇪🇺 Europa (€)';
+
+  const slideSub = document.querySelector('.slide-subtitle');
+  if (slideSub) slideSub.textContent = getLang().explore;
+
   renderGrid();
 }
 
@@ -120,7 +142,7 @@ function renderGrid() {
     });
 
     const countEl = document.getElementById('pcount');
-    if (countEl) countEl.textContent = `${list.length} produtos`;
+    if (countEl) countEl.textContent = `${list.length} ${getLang().found}`;
 
     desenharCards('grid', list);
 
@@ -138,9 +160,10 @@ function renderGrid() {
 function desenharCards(containerId, lista) {
   const grid = document.getElementById(containerId);
   if (!grid) return;
+  const lang = getLang();
 
   if (lista.length === 0) {
-    grid.innerHTML = '<div class="empty">Nenhum produto encontrado.</div>';
+    grid.innerHTML = `<div class="empty">${lang.empty}</div>`;
     return;
   }
 
@@ -156,9 +179,9 @@ function desenharCards(containerId, lista) {
         <div class="card-brand">${p.marca.toUpperCase()}</div>
         <div class="card-name">${p.nome}</div>
         <div class="card-footer">
-          <div class="card-price">${price(p)}</div>
+          <div class="card-price">${lang.price}</div>
           <button class="wpp-btn" onclick="event.stopPropagation();window.open('https://wa.me/${WPP}?text=${wppMsg(p, null)}','_blank')">
-            ${wppSvg} DETALHES
+            ${wppSvg} ${lang.buy}
           </button>
         </div>
       </div>
@@ -173,35 +196,30 @@ function openModal(id) {
   const p = list.find(x => Number(x.id) === pid);
   if (!p) return;
   curProd = p; curSize = null;
+  const lang = getLang();
 
-  const mImg = document.getElementById('mImg');
-  const mBrand = document.getElementById('mBrand');
-  const mName = document.getElementById('mName');
-  const mType = document.getElementById('mType');
-  const mPrice = document.getElementById('mPrice');
-  const mDesc = document.getElementById('mDesc');
-  const mSizes = document.getElementById('mSizes');
-  const mThumbs = document.getElementById('mThumbs');
   const overlay = document.getElementById('overlay');
+  if (!overlay) return;
 
-  if (!mImg || !mBrand || !mName || !mType || !mPrice || !mDesc || !mSizes || !mThumbs || !overlay) return;
+  document.getElementById('mImg').src = encodeURI(BASE_URL_FOTOS + p.imgs[0]);
+  document.getElementById('mBrand').textContent = p.marca.toUpperCase();
+  document.getElementById('mName').textContent = p.nome;
+  const mType = document.getElementById('mType');
+  if (mType) mType.textContent = p.tipo.toUpperCase();
+  document.getElementById('mPrice').textContent = lang.price;
+  document.getElementById('mDesc').textContent = p.desc || "Exclusividade Mirage Co.";
 
-  mImg.src = encodeURI(BASE_URL_FOTOS + p.imgs[0]);
-  mBrand.textContent = p.marca.toUpperCase();
-  mName.textContent = p.nome;
-  mType.textContent = p.tipo.toUpperCase();
-  mPrice.textContent = price(p);
-  mDesc.textContent = p.desc || "Exclusividade Mirage Co.";
-
-  mSizes.innerHTML = (p.sizes || ["P", "M", "G", "GG"])
+  document.getElementById('mSizes').innerHTML = (p.sizes || ["P", "M", "G", "GG"])
     .map(s => `<button class="sz" onclick="selSize('${s}',this)">${s}</button>`).join('');
 
-  mThumbs.innerHTML = p.imgs
+  document.getElementById('mThumbs').innerHTML = p.imgs
     .map((img, i) => `<img src="${encodeURI(BASE_URL_FOTOS + img)}" class="${i === 0 ? 'active' : ''}" onclick="switchImg(this.src,this)">`).join('');
 
-  // Define o handler do botão WPP inicial (sem tamanho selecionado)
   const wppBtn = document.getElementById('mWpp');
-  if (wppBtn) wppBtn.onclick = () => window.open(`https://wa.me/${WPP}?text=${wppMsg(curProd, curSize)}`, '_blank');
+  if (wppBtn) {
+    wppBtn.innerHTML = `${wppSvg} ${lang.buy}`;
+    wppBtn.onclick = () => window.open(`https://wa.me/${WPP}?text=${wppMsg(curProd, curSize)}`, '_blank');
+  }
 
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
