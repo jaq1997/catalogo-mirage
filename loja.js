@@ -190,6 +190,9 @@ function desenharCards(containerId, lista) {
 }
 
 /* ─── MODAL ─────────────────────────────────────────────────────────────── */
+let carouselImgs = [];
+let carouselIdx = 0;
+
 function openModal(id) {
   const list = window.todos || [];
   const pid = typeof id === 'number' ? id : Number(id);
@@ -201,7 +204,11 @@ function openModal(id) {
   const overlay = document.getElementById('overlay');
   if (!overlay) return;
 
-  document.getElementById('mImg').src = encodeURI(BASE_URL_FOTOS + p.imgs[0]);
+  // Carrossel
+  carouselImgs = p.imgs || [];
+  carouselIdx = 0;
+  renderCarousel();
+
   document.getElementById('mBrand').textContent = p.marca.toUpperCase();
   document.getElementById('mName').textContent = p.nome;
   const mType = document.getElementById('mType');
@@ -212,9 +219,6 @@ function openModal(id) {
   document.getElementById('mSizes').innerHTML = (p.sizes || ["P", "M", "G", "GG"])
     .map(s => `<button class="sz" onclick="selSize('${s}',this)">${s}</button>`).join('');
 
-  document.getElementById('mThumbs').innerHTML = p.imgs
-    .map((img, i) => `<img src="${encodeURI(BASE_URL_FOTOS + img)}" class="${i === 0 ? 'active' : ''}" onclick="switchImg(this.src,this)">`).join('');
-
   const wppBtn = document.getElementById('mWpp');
   if (wppBtn) {
     wppBtn.innerHTML = `${wppSvg} ${lang.buy}`;
@@ -223,6 +227,74 @@ function openModal(id) {
 
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
+}
+
+function renderCarousel() {
+  const track = document.getElementById('carouselTrack');
+  const dots = document.getElementById('carouselDots');
+  const chevL = document.getElementById('chevronLeft');
+  const chevR = document.getElementById('chevronRight');
+  if (!track) return;
+
+  track.innerHTML = carouselImgs.map((img, i) => `
+    <div class="carousel-slide" data-index="${i}">
+      <img src="${encodeURI(BASE_URL_FOTOS + img)}" alt="" loading="${i === 0 ? 'eager' : 'lazy'}"
+           onerror="this.src='https://placehold.co/400x500?text=Foto+Indisponível'">
+    </div>`).join('');
+
+  if (dots) {
+    dots.innerHTML = carouselImgs.length > 1
+      ? carouselImgs.map((_, i) => `<span class="carousel-dot${i === 0 ? ' active' : ''}" onclick="carouselGoTo(${i})"></span>`).join('')
+      : '';
+  }
+
+  // Sincroniza scroll para o slide correto e atualiza chevrons
+  scrollToSlide(carouselIdx, 'instant');
+  updateChevrons();
+
+  // Detecta scroll manual (dedo) e atualiza dots + chevrons
+  track.onscroll = () => {
+    const slideW = track.offsetWidth;
+    if (!slideW) return;
+    carouselIdx = Math.round(track.scrollLeft / slideW);
+    updateDots();
+    updateChevrons();
+  };
+}
+
+function scrollToSlide(idx, behavior = 'smooth') {
+  const track = document.getElementById('carouselTrack');
+  if (!track) return;
+  track.scrollTo({ left: idx * track.offsetWidth, behavior });
+}
+
+function carouselStep(dir) {
+  carouselIdx = Math.max(0, Math.min(carouselImgs.length - 1, carouselIdx + dir));
+  scrollToSlide(carouselIdx);
+  updateDots();
+  updateChevrons();
+}
+
+function carouselGoTo(idx) {
+  carouselIdx = idx;
+  scrollToSlide(carouselIdx);
+  updateDots();
+  updateChevrons();
+}
+
+function updateDots() {
+  document.querySelectorAll('.carousel-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === carouselIdx);
+  });
+}
+
+function updateChevrons() {
+  const chevL = document.getElementById('chevronLeft');
+  const chevR = document.getElementById('chevronRight');
+  if (chevL) chevL.style.opacity = carouselIdx === 0 ? '0' : '1';
+  if (chevL) chevL.style.pointerEvents = carouselIdx === 0 ? 'none' : 'auto';
+  if (chevR) chevR.style.opacity = carouselIdx === carouselImgs.length - 1 ? '0' : '1';
+  if (chevR) chevR.style.pointerEvents = carouselIdx === carouselImgs.length - 1 ? 'none' : 'auto';
 }
 
 function closeModal(e) {
@@ -240,11 +312,6 @@ function selSize(s, btn) {
   if (wppBtn) wppBtn.onclick = () => window.open(`https://wa.me/${WPP}?text=${wppMsg(curProd, curSize)}`, '_blank');
 }
 
-function switchImg(src, el) {
-  document.getElementById('mImg').src = src;
-  document.querySelectorAll('#mThumbs img').forEach(i => i.classList.remove('active'));
-  el.classList.add('active');
-}
 
 /* ─── DROPDOWN BRANDS ────────────────────────────────────────────────────── */
 function toggleBrandsDropdown(e) {
