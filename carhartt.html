@@ -178,8 +178,10 @@
     <div class="modal">
       <button class="mcls" onclick="closeModal()">✕</button>
       <div class="modal-img-wrap">
-        <img id="mImg" src="" alt="">
-        <div class="modal-thumbs" id="mThumbs"></div>
+        <button class="carousel-chevron left" id="chevronLeft" onclick="carouselStep(-1)">&#8249;</button>
+        <div class="carousel-track" id="carouselTrack"></div>
+        <button class="carousel-chevron right" id="chevronRight" onclick="carouselStep(1)">&#8250;</button>
+        <div class="carousel-dots" id="carouselDots"></div>
       </div>
       <div class="modal-body">
         <div class="m-brand" id="mBrand"></div>
@@ -283,17 +285,10 @@
           </g>
         </g>
       </svg></a>
-    <div>© 2025 Mirage Co. — Streetwear</div>
-    <div style="display:flex;gap:16px">
-      <a href="#">Instagram</a>
-      <a href="#">WhatsApp</a>
-    </div>
+    <div>© 2065 Mirage Co. — Streetwear</div>
+
   </footer>
   <script src="produtos.js"></script>
-  <script>
-    // Filtra só esta marca
-    window.produtos = (window.todos || []).filter(p => p.marca === 'carhartt');
-  </script>
   <script src="loja.js"></script>
   <script src="animacoes.js"></script>
   <!-- Botão WhatsApp Flutuante -->
