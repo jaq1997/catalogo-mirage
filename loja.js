@@ -22,14 +22,26 @@ const i18n = {
     buy: "Comprar no WhatsApp",
     explore: "EXPLORE O DROP",
     empty: "Nenhum produto encontrado.",
-    found: "produtos encontrados"
+    found: "produtos encontrados",
+    shipping: "ENVIO EUROPA & BRASIL",
+    slides: [
+      { sub: "NOVIDADES", title: "SUPREME<br>SS24", btn: "COMPRAR" },
+      { sub: "COLLAB EXCLUSIVA", title: "NIKE x<br>NOCTA", btn: "EXPLORAR" },
+      { sub: "ÍCONE STREETWEAR", title: "A BATHING<br>APE", btn: "DESCOBRIR" }
+    ]
   },
   en: {
     price: "Price on request",
     buy: "Order via WhatsApp",
     explore: "DISCOVER THE DROP",
     empty: "No products found.",
-    found: "products found"
+    found: "products found",
+    shipping: "EUROPE & BRAZIL SHIPPING",
+    slides: [
+      { sub: "NEW ARRIVALS", title: "SUPREME<br>SS24", btn: "SHOP NOW" },
+      { sub: "EXCLUSIVE COLLAB", title: "NIKE x<br>NOCTA", btn: "EXPLORE" },
+      { sub: "STREETWEAR ICON", title: "A BATHING<br>APE", btn: "DISCOVER" }
+    ]
   }
 };
 
@@ -95,6 +107,41 @@ function handleSearch(val) {
   }
 }
 
+function updateStaticTexts() {
+  const lang = getLang();
+
+  // Atualiza o ticker em todas as páginas
+  document.querySelectorAll('.ticker-inner span').forEach(span => {
+    // Only target the shipping string, which usually has longer length
+    if (span.textContent.includes('ENVIO') || span.textContent.includes('SHIPPING') || span.textContent.includes('EUROPA')) {
+      span.textContent = lang.shipping;
+    }
+  });
+
+  // Atualiza os banners
+  if (marcaFixa === 'todos') {
+    const slides = document.querySelectorAll('#heroSlider .slide');
+    slides.forEach((slide, idx) => {
+      if (!lang.slides[idx]) return;
+      const sub = slide.querySelector('.slide-subtitle');
+      const title = slide.querySelector('.slide-title');
+      const btn = slide.querySelector('.slide-btn');
+      
+      if (sub) sub.textContent = lang.slides[idx].sub;
+      if (title) title.innerHTML = lang.slides[idx].title;
+      if (btn) btn.textContent = lang.slides[idx].btn;
+    });
+  } else {
+    // Banner dinâmico para páginas internas
+    const slideTitle = document.querySelector('.slide-title');
+    const slideSub = document.querySelector('.slide-subtitle');
+    const slideBtn = document.querySelector('.slide-btn');
+    if (slideTitle) slideTitle.innerHTML = `${marcaFixa.toUpperCase()}<br>COLLECTION`;
+    if (slideSub) slideSub.textContent = lang.explore;
+    if (slideBtn) slideBtn.style.display = 'none';
+  }
+}
+
 function toggleRegion() {
   const btn = document.getElementById('regionBtn');
   if (!btn) return;
@@ -102,9 +149,7 @@ function toggleRegion() {
   btn.dataset.eu = isEuNow ? '0' : '1';
   btn.textContent = isEuNow ? '🇧🇷 Brasil (R$)' : '🇪🇺 Europa (€)';
 
-  const slideSub = document.querySelector('.slide-subtitle');
-  if (slideSub) slideSub.textContent = getLang().explore;
-
+  updateStaticTexts();
   renderGrid();
 }
 
@@ -145,14 +190,8 @@ function renderGrid() {
     if (countEl) countEl.textContent = `${list.length} ${getLang().found}`;
 
     desenharCards('grid', list);
-
-    // Banner dinâmico para páginas internas
-    const slideTitle = document.querySelector('.slide-title');
-    const slideSub = document.querySelector('.slide-subtitle');
-    const slideBtn = document.querySelector('.slide-btn');
-    if (slideTitle) slideTitle.innerHTML = `${marcaFixa.toUpperCase()}<br>COLLECTION`;
-    if (slideSub) slideSub.textContent = "EXPLORE O DROP";
-    if (slideBtn) slideBtn.style.display = 'none';
+    
+    // We already handled internal page banner dynamic titles in updateStaticTexts.
   }
 }
 
@@ -321,6 +360,7 @@ function toggleBrandsDropdown(e) {
 
 /* ─── INICIALIZAÇÃO ──────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
+  updateStaticTexts();
   renderGrid();
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
