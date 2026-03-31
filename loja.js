@@ -41,13 +41,38 @@ const i18n = {
       { sub: "NEW ARRIVALS", title: "SUPREME<br>SS24", btn: "SHOP NOW" },
       { sub: "EXCLUSIVE COLLAB", title: "NIKE x<br>NOCTA", btn: "EXPLORE" },
       { sub: "STREETWEAR ICON", title: "A BATHING<br>APE", btn: "DISCOVER" }
-    ]
+    ],
+    types: {
+      "calça": "Pants",
+      "calças": "Pants",
+      "camiseta": "T-Shirt",
+      "camisetas": "T-Shirts",
+      "jaqueta": "Jacket",
+      "jaquetas": "Jackets",
+      "moletom": "Hoodie",
+      "moletons": "Hoodies",
+      "tênis": "Sneakers",
+      "acessório": "Accessory",
+      "acessórios": "Accessories"
+    }
   }
 };
 
 /* ─── HELPERS DE IDIOMA E MOEDA ─────────────────────────────────────────── */
 function isEu() { return document.getElementById('regionBtn')?.dataset.eu === '1'; }
 function getLang() { return isEu() ? i18n.en : i18n.pt; }
+
+function tStr(str) {
+  if (!str) return '';
+  const lang = getLang();
+  if (!isEu() || !lang.types) return str;
+  let translated = str;
+  for (const [key, val] of Object.entries(lang.types)) {
+    const rx = new RegExp(`\\b${key}\\b`, 'gi');
+    translated = translated.replace(rx, val);
+  }
+  return translated;
+}
 
 function wppMsg(p, sz) {
   const lang = getLang();
@@ -118,6 +143,23 @@ function updateStaticTexts() {
     }
   });
 
+  // Atualiza os botões de Filtro
+  document.querySelectorAll('.fb[data-g="tipo"]').forEach(btn => {
+    const val = btn.dataset.v.toLowerCase();
+    if (val === 'todos') {
+      btn.textContent = isEu() ? 'ALL' : 'TODOS';
+    } else if (isEu() && lang.types && lang.types[val]) {
+      btn.textContent = lang.types[val].toUpperCase();
+    } else {
+      btn.textContent = val.toUpperCase();
+    }
+  });
+
+  const fgLabel = document.querySelector('.fg-label');
+  if (fgLabel) {
+    fgLabel.textContent = isEu() ? 'Item Type' : 'Tipo de peça';
+  }
+
   // Atualiza os banners
   if (marcaFixa === 'todos') {
     const slides = document.querySelectorAll('#heroSlider .slide');
@@ -146,8 +188,11 @@ function toggleRegion() {
   const btn = document.getElementById('regionBtn');
   if (!btn) return;
   const isEuNow = btn.dataset.eu === '1';
-  btn.dataset.eu = isEuNow ? '0' : '1';
-  btn.textContent = isEuNow ? '🇧🇷 Brasil (R$)' : '🇪🇺 Europa (€)';
+  const newEu = isEuNow ? '0' : '1';
+  btn.dataset.eu = newEu;
+  btn.textContent = newEu === '1' ? '🇪🇺 Europa (€)' : '🌎 Brasil (R$)';
+
+  localStorage.setItem('euRegion', newEu);
 
   updateStaticTexts();
   renderGrid();
@@ -216,7 +261,7 @@ function desenharCards(containerId, lista) {
       </div>
       <div class="card-info">
         <div class="card-brand">${p.marca.toUpperCase()}</div>
-        <div class="card-name">${p.nome}</div>
+        <div class="card-name">${tStr(p.nome)}</div>
         <div class="card-footer">
           <div class="card-price">${lang.price}</div>
           <button class="wpp-btn" onclick="event.stopPropagation();window.open('https://wa.me/${WPP}?text=${wppMsg(p, null)}','_blank')">
@@ -249,9 +294,9 @@ function openModal(id) {
   renderCarousel();
 
   document.getElementById('mBrand').textContent = p.marca.toUpperCase();
-  document.getElementById('mName').textContent = p.nome;
+  document.getElementById('mName').textContent = tStr(p.nome);
   const mType = document.getElementById('mType');
-  if (mType) mType.textContent = p.tipo.toUpperCase();
+  if (mType) mType.textContent = (tStr(p.tipo) || "").toUpperCase();
   document.getElementById('mPrice').textContent = lang.price;
   document.getElementById('mDesc').textContent = p.desc || "Exclusividade Mirage Co.";
 
@@ -360,6 +405,13 @@ function toggleBrandsDropdown(e) {
 
 /* ─── INICIALIZAÇÃO ──────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('regionBtn');
+  const savedEu = localStorage.getItem('euRegion');
+  if (btn && savedEu) {
+    btn.dataset.eu = savedEu;
+    btn.textContent = savedEu === '1' ? '🇪🇺 Europa (€)' : '🌎 Brasil (R$)';
+  }
+
   updateStaticTexts();
   renderGrid();
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
